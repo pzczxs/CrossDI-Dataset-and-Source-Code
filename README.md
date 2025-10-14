@@ -88,7 +88,7 @@ Outputs:
 - Merged results: result/results-{ID}-ALL-SOURCES.xlsx
 
 Output columns  
-DOI, Publication year, Y, Source, N_F, N_B, N_R, DI, mDI, N_B^5, DI_5, DI^noR, N_F_new, N_B_new, DI_3%, DEP, Orig_base, Destabilization(D), Consolidation(C), DOI, Publication year, Y, Source, invDEP
+N_F, N_B, N_R, DI, mDI, N_B^5, DI_5, DI^noR, N_F_new, N_B_new, DI_3%, DEP, Orig_base, Destabilization(D), Consolidation(C), DOI, Publication year, Y, Source, invDEP
 
 ## 6. References
 [1] Shuo Xu, Congcong Wang, and Xin An, 2025. CrossDI: A Comprehensive Dataset Crossing Three Databases for Calculating Disruption Indexes. *Scientific Data*. (Under review)
