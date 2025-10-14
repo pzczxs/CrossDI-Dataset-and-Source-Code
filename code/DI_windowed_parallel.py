@@ -138,26 +138,28 @@ def _count_intersection_size(set_a, set_b):
 
 # ===== Global hot references =====
 def get_global_hotrefs_windowed(target_dois, citation_dict, reverse_dict, allowed_citing, x_pct=0.03):
-    freq_A = {}
-    for target in target_dois:
-        setA = citation_dict.get(target, set())
-        if not setA:
-            continue
-        for a in setA:
-            rev_set = reverse_dict.get(a, set())
-            if not rev_set:
-                continue
-            cnt = _count_intersection_size(rev_set, allowed_citing)
-            if cnt:
-                freq_A[a] = freq_A.get(a, 0) + cnt
-
-    if not freq_A:
+    cand_refs = set()
+    for citing in allowed_citing:
+        refs = citation_dict.get(citing)
+        if refs:
+            cand_refs |= refs
+    cand_refs -= set(target_dois)
+    if not cand_refs:
         return set()
+    freq = {}
+    for a in cand_refs:
+        rev_set = reverse_dict.get(a)
+        if not rev_set:
+            continue
+        cnt = _count_intersection_size(rev_set, allowed_citing)
+        if cnt:
+            freq[a] = cnt
+    if not freq:
+        return set()
+    k = max(1, math.ceil(x_pct * len(freq)))
+    kth_freq = sorted(freq.values(), reverse=True)[k-1]
+    return {a for a, c in freq.items() if c >= kth_freq}
 
-    k = max(1, math.ceil(x_pct * len(freq_A)))
-    sorted_items = sorted(freq_A.items(), key=lambda kv: (-kv[1], kv[0]))
-    kth_freq = sorted_items[min(k, len(sorted_items)) - 1][1]
-    return {a for a, c in freq_A.items() if c >= kth_freq}
 
 # ===== Metrics calculation =====
 def calc_DI_metrics(target_doi, citation_dict, reverse_dict, allowed_citing, X_top_global):
@@ -294,7 +296,7 @@ def _init_worker(citation_dict, reverse_dict, relevant_years, year_bins, cutoff_
         "year_bins": year_bins,
         "cutoff_year": cutoff_year,
         "source_name": source_name,
-        "target_dois": tuple(target_dois),  
+        "target_dois": tuple(target_dois),
     }
 
 
@@ -310,8 +312,6 @@ def _process_target(task):
     Y_max = cutoff_year - target_year + 1
     allowed_citing = set()
     year_idx = 0
-    if target in citation_dict:
-        allowed_citing.add(target)
 
     results = []
     for Y in range(1, Y_max):
@@ -319,6 +319,7 @@ def _process_target(task):
         while year_idx < len(relevant_years) and relevant_years[year_idx] <= threshold_year:
             allowed_citing.update(year_bins[relevant_years[year_idx]])
             year_idx += 1
+
         X_top_global_Y = get_global_hotrefs_windowed(
             data["target_dois"], citation_dict, reverse_dict, allowed_citing, x_pct=0.03)
 
@@ -405,6 +406,8 @@ if __name__ == "__main__":
 
         out_name = f"results-1-{source_name}.xlsx"
         df_src.to_excel(out_name, index=False)
+        print(f"Results for {source_name} written to: {out_name}")
+
         all_sources_results.append(df_src)
 
     if all_sources_results:
