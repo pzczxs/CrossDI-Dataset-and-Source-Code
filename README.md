@@ -65,6 +65,7 @@ For each (Source, Target, $Y$), the script reports:
 $DI$, $mDI$, $DI_5$, $DI^{noR}$, $DI_{3\\%}$, $DEP$, $invDEP$, $Orig_{base}$, Destabilization ($D$), and Consolidation ($C$)
 
 ## 5. How to run
+### 5.1 Parameter Setting
 Set the paths at the bottom of the script. Example for domain 1:
 
 ```python
@@ -78,8 +79,7 @@ target_path   = "target/target-1.csv"
 cutoff_year   = 2023
 ```
 
-Run:
-
+### 5.2 Run
 ```
 python DI_windowed_parallel.py
 ```
@@ -87,7 +87,7 @@ Outputs:
 - One Excel per source: result/results-{ID}-{SOURCE}.xlsx
 - Merged results: result/results-{ID}-ALL-SOURCES.xlsx
 
-Output columns  
+### 5.3 Output columns  
 N_F, N_B, N_R, DI, mDI, N_B^5, DI_5, DI^noR, N_F_new, N_B_new, DI_3%, DEP, Orig_base, Destabilization(D), Consolidation(C), DOI, Publication year, Y, Source, invDEP
 
 ## 6. References
