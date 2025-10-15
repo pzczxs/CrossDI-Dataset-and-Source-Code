@@ -91,7 +91,7 @@ Output columns
 N_F, N_B, N_R, DI, mDI, N_B^5, DI_5, DI^noR, N_F_new, N_B_new, DI_3%, DEP, Orig_base, Destabilization(D), Consolidation(C), DOI, Publication year, Y, Source, invDEP
 
 ## 6. References
-[1] Shuo Xu, Congcong Wang, and Xin An, 2025. CrossDI: A Comprehensive Dataset Crossing Three Databases for Calculating Disruption Indexes. *Scientific Data*. (Under review)
+[1] Shuo Xu, Congcong Wang, Xin An, and Jianhua Liu, 2025. CrossDI: A Comprehensive Dataset Crossing Three Databases for Calculating Disruption Indexes. *Scientific Data*. (Under review)
 
 [2] Shuo Xu, Congcong Wang, Xin An, Yunkang Deng, and Jianhua Liu, 2025. [Do OpenCitations and Dimensions Serve as an Alternative to Web of Science for Calculating Disruption Indexes?](https://doi.org/10.1016/j.joi.2025.101685) *Journal of Informetrics*, Vol. 19, No. 3, pp. 101685. 
 
